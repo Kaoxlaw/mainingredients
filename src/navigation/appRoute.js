@@ -5,11 +5,7 @@ export default {
   SearchRecipes: {
     screen: SearchRecipes,
     navigationOptions: {
-      title: 'Search Recipes',
-      headerStyle: {
-        backgroundColor: '#1b3d63',
-      },
-      headerTintColor: '#fff',
+      header: null,
     },
   },
   Recipes: {

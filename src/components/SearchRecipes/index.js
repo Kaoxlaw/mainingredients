@@ -27,9 +27,11 @@ class SearchRecipes extends Component {
     this.makeRemoteRequest();
   }
 
+  //Récupère les recettes de l'API food2fork
   makeRemoteRequest = () => {
-    const key = '7c2affbc9f6376ff2811659a1acd4f59';
-    const url = 'https://www.food2fork.com/api/search?key=' + key;
+    const key = 'd07d9142983c7fb51dfebb98c2e8ff1a';
+    const url = `https://www.food2fork.com/api/search?key=${key}`;
+
     this.setState({loading: true});
 
     fetch(url)
@@ -47,10 +49,12 @@ class SearchRecipes extends Component {
       });
   };
 
+  //Separateur entre les recettes
   renderSeparator = () => {
     return <View style={styles.separator} />;
   };
 
+  //Filtre pour la recherche dans la barre de recherche
   searchFilterFunction = text => {
     this.setState({
       value: text,
@@ -67,10 +71,11 @@ class SearchRecipes extends Component {
     });
   };
 
+  //Header qui correspond au titre et à la barre de recherche
   renderHeader = () => {
     return (
-      <View>
-        <Text style={styles.title}>What recipes are you looking for?</Text>
+      <View style={styles.bar}>
+        <Text style={styles.title}>Which recipes are you looking for?</Text>
         <SearchBar
           placeholder="Search..."
           lightTheme
@@ -79,7 +84,7 @@ class SearchRecipes extends Component {
           autoCorrect={false}
           value={this.state.value}
           containerStyle={{
-            backgroundColor: 'transparent',
+            backgroundColor: 'white',
             borderTopWidth: 0,
             borderBottomWidth: 0,
             marginBottom: 10,
@@ -90,6 +95,7 @@ class SearchRecipes extends Component {
     );
   };
 
+  //les recettes
   selectedRecipes = recipes => {
     this.props.navigation.navigate('Recipes', {recipes});
   };
@@ -105,6 +111,7 @@ class SearchRecipes extends Component {
     return (
       <View style={styles.container}>
         <FlatList
+          stickyHeaderIndices={[0]}
           data={this.state.data}
           renderItem={({item}) => (
             <TouchableOpacity

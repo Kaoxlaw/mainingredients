@@ -7,6 +7,7 @@ import styles from './styles';
 class Recipes extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       recipes: this.props.navigation.state.params.recipes,
     };

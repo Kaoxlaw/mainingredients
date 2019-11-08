@@ -9,6 +9,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  bar: {
+    backgroundColor: 'white',
+  },
   title: {
     fontSize: 20,
     paddingTop: 20,
@@ -16,7 +19,7 @@ export default StyleSheet.create({
   },
   separator: {
     height: 1,
-    width: '86%',
+    width: '90%',
     backgroundColor: '#CED0CE',
     marginLeft: '14%',
   },
