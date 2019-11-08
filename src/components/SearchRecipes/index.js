@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, FlatList, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import {SearchBar, ListItem} from 'react-native-elements';
 
 import styles from './styles';
@@ -22,18 +28,19 @@ class SearchRecipes extends Component {
   }
 
   makeRemoteRequest = () => {
-    const url = 'https://randomuser.me/api/?&results=20';
+    const key = '7c2affbc9f6376ff2811659a1acd4f59';
+    const url = 'https://www.food2fork.com/api/search?key=' + key;
     this.setState({loading: true});
 
     fetch(url)
       .then(res => res.json())
       .then(res => {
         this.setState({
-          data: res.results,
+          data: res.recipes,
           error: res.error || null,
           loading: false,
         });
-        this.arrayholder = res.results;
+        this.arrayholder = res.recipes;
       })
       .catch(error => {
         this.setState({error, loading: false});
@@ -50,7 +57,7 @@ class SearchRecipes extends Component {
     });
 
     const newData = this.arrayholder.filter(item => {
-      const itemData = `${item.name.title.toUpperCase()} ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
+      const itemData = `${item.title.toUpperCase()}`;
       const textData = text.toUpperCase();
 
       return itemData.indexOf(textData) > -1;
@@ -72,7 +79,7 @@ class SearchRecipes extends Component {
           autoCorrect={false}
           value={this.state.value}
           containerStyle={{
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             borderTopWidth: 0,
             borderBottomWidth: 0,
             marginBottom: 10,
@@ -81,6 +88,10 @@ class SearchRecipes extends Component {
         />
       </View>
     );
+  };
+
+  selectedRecipes = recipes => {
+    this.props.navigation.navigate('Recipes', {recipes});
   };
 
   render() {
@@ -96,13 +107,21 @@ class SearchRecipes extends Component {
         <FlatList
           data={this.state.data}
           renderItem={({item}) => (
-            <ListItem
-              leftAvatar={{source: {uri: item.picture.thumbnail}}}
-              title={`${item.name.first} ${item.name.last}`}
-              subtitle={item.email}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                this.selectedRecipes(item);
+              }}>
+              <ListItem
+                leftAvatar={{source: {uri: item.image_url}}}
+                title={item.title}
+                subtitle={item.publisher}
+                rightElement={
+                  '  rank\n' + (Math.round(item.social_rank) + '/100')
+                }
+              />
+            </TouchableOpacity>
           )}
-          keyExtractor={item => item.email}
+          keyExtractor={item => item.title}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
         />
@@ -110,4 +129,5 @@ class SearchRecipes extends Component {
     );
   }
 }
+
 export default SearchRecipes;
