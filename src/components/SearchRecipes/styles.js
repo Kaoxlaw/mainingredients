@@ -12,6 +12,13 @@ export default StyleSheet.create({
   bar: {
     backgroundColor: 'white',
   },
+  searchBarContainerStyle: {
+    backgroundColor: 'white',
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    marginBottom: 10,
+    marginTop: 20,
+  },
   title: {
     fontSize: 20,
     paddingTop: 20,

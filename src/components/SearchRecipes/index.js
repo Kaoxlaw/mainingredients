@@ -83,13 +83,7 @@ class SearchRecipes extends Component {
           onChangeText={text => this.searchFilterFunction(text)}
           autoCorrect={false}
           value={this.state.value}
-          containerStyle={{
-            backgroundColor: 'white',
-            borderTopWidth: 0,
-            borderBottomWidth: 0,
-            marginBottom: 10,
-            marginTop: 20,
-          }}
+          containerStyle={styles.searchBarContainerStyle}
         />
       </View>
     );
